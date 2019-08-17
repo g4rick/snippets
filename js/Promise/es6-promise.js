@@ -37,6 +37,10 @@ class MyPromise {
       }
     }
   }
+
+  catch(arg) {
+    return this.then(undefined, arg);
+  }
 }
 
 const promise = new MyPromise((resolve, reject) => {
