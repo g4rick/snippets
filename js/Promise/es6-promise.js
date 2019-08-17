@@ -2,18 +2,23 @@ const STATUS = {
   pending: 'PENDING',
   resolved: 'RESOLVE',
   rejected: 'REJECTED'
+};
+
+const resolve = () => {
+  promise.status = STATUS.resolved;
 }
+
+
+const reject = () => {
+  promise.status = STATUS.rejected;
+}
+
 class MyPromise {
   constructor(executor) {
     this.status = STATUS.pending;
-    executor(this.resolve, this.reject);
-  }
-
-  resolve(data) {
-    this.status = STATUS.resolved;
-  }
-
-  reject(data) {
-    this.status = STATUS.rejected;
+    executor((data) => resolve(this, data), (data) => reject(this, data));
   }
 }
+
+const promise = new MyPromise((resolve, reject) => {});
+console.log(promise.resolve());
