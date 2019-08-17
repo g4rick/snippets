@@ -4,7 +4,7 @@ const STATUS = {
   rejected: 'REJECTED'
 };
 
-const statusProvider = (promise, status, data) => {
+const statusProvider = (promise, status) => data => {
   if (promise.status !== STATUS.pending) {
     return false;
   }
@@ -17,8 +17,8 @@ class MyPromise {
     this.status = STATUS.pending;
     this.result = null;
     executor(
-      data => statusProvider(this, STATUS.resolved, data),
-      data => statusProvider(this, STATUS.rejected, data)
+      statusProvider(this, STATUS.resolved),
+      statusProvider(this, STATUS.rejected)
     );
   }
 
